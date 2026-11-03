@@ -1,0 +1,11 @@
+## کپی کن به local.properties و مسیر SDK خودت را بگذار (فقط برای ساخت محلی)
+## این فایل را در Git commit نکن
+
+## Windows:
+# sdk.dir=C\:\\Users\\YOUR_USER\\AppData\\Local\\Android\\Sdk
+
+## macOS:
+# sdk.dir=/Users/YOUR_USER/Library/Android/sdk
+
+## Linux:
+# sdk.dir=/home/YOUR_USER/Android/Sdk

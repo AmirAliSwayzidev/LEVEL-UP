@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>پخته شدن</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07110e;--card:#111f1a;--tx:#f2ebd3;--mut:#9aa89f;--gold:#d4af37;--em:#2ecc8f;--ro:#7b4fd6;--ink:#000;--bd:color-mix(in srgb,var(--mut) 28%,transparent);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f6f3e8;--card:#fff;--tx:#1b2a24;--mut:#5d6b64;--gold:#a8841a;--em:#17996a;--ro:#6a3fc4;--ink:#fff}}
+:root[data-theme="light"]{--bg:#f6f3e8;--card:#fff;--tx:#1b2a24;--mut:#5d6b64;--gold:#a8841a;--em:#17996a;--ro:#6a3fc4;--ink:#fff}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,sans-serif;display:flex;flex-direction:column;max-width:560px;margin:auto}
+main{flex:1;overflow:auto;padding:16px}
+h1{color:var(--gold);margin:0 0 2px;font-size:24px}
+.card{background:var(--card);border-radius:22px;padding:18px;margin:12px 0;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+.mut{color:var(--mut);font-size:13px}.gold{color:var(--gold)}.em{color:var(--em)}.ro{color:var(--ro)}
+.bar{height:10px;border-radius:9px;background:var(--bg);overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--em),var(--gold));border-radius:9px;transition:width .8s ease}
+nav{display:flex;background:var(--card);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;border:0;color:var(--mut);font:inherit;font-size:12px;padding:8px 2px;border-radius:14px;cursor:pointer}
+nav button.on{background:var(--gold);color:var(--ink);font-weight:700}
+input,select,textarea{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:12px;padding:10px;font:inherit;margin:4px 0}
+.btn{background:var(--gold);color:var(--ink);border:0;border-radius:14px;padding:11px 18px;font:inherit;font-weight:700;cursor:pointer}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.row .fit{flex:none}
+.item{display:flex;gap:10px;align-items:center}.item .t{flex:1}
+.item.done .t b{text-decoration:line-through;opacity:.55}
+input[type=checkbox]{width:24px;height:24px;accent-color:var(--em);margin:0}
+.x{background:none;border:0;color:var(--ro);font-size:20px;cursor:pointer;flex:none}
+.bars{display:flex;gap:8px;align-items:flex-end;height:130px;margin-top:10px}
+.bars div{flex:1;text-align:center;font-size:11px;color:var(--mut)}
+.bars b{display:block;border-radius:8px 8px 0 0;background:var(--em);min-height:3px;transition:height .8s}
+.tag{background:var(--ro);color:#fff;border-radius:9px;padding:2px 8px;font-size:11px}
+.fab{position:fixed;bottom:calc(84px + env(safe-area-inset-bottom,0px));left:max(18px,calc(50% - 262px));width:58px;height:58px;border-radius:50%;border:0;background:var(--gold);color:var(--ink);font-size:32px;box-shadow:0 6px 18px #0006;cursor:pointer;z-index:10}
+.bk{position:fixed;inset:0;background:#000a;z-index:20}
+.sh{position:fixed;left:0;right:0;bottom:0;max-width:560px;margin:auto;max-height:92vh;overflow:auto;background:var(--card);border-radius:26px 26px 0 0;padding:14px 18px calc(18px + env(safe-area-inset-bottom,0px));z-index:21}
+.sh.new{animation:up .3s ease}
+@keyframes up{from{transform:translateY(100%)}}
+.grip{width:44px;height:5px;border-radius:5px;background:var(--mut);margin:0 auto 8px;opacity:.5}
+.lb{font-size:13px;color:var(--em);margin:14px 0 6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold)}
+.chip{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:999px;padding:9px 15px;font:inherit;font-size:13px;cursor:pointer}
+.chip.on{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700}
+.sum{background:var(--bg);border-radius:14px;padding:11px 13px;margin-top:14px;font-size:13px}
+input,select{font-size:16px}
+.mdl{position:fixed;left:16px;right:16px;top:50%;transform:translateY(-50%);max-width:420px;margin:auto;background:var(--card);border-radius:26px;padding:22px;z-index:31;animation:in .3s ease;box-shadow:0 10px 40px #0008;max-height:90vh;overflow:auto}
+#ov .bk{z-index:30}
+.big{font-size:58px;font-weight:700;text-align:center;color:var(--em);direction:ltr;margin:8px 0}
+</style>
+</head>
+<body>
+<main id="v"></main>
+<nav id="nav"></nav>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const MN=["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"];
+const WD=["یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه","شنبه"];
+const PER={daily:"روزانه",weekly:"هفتگی",monthly:"ماهانه",yearly:"سالانه"};
+const TERM={short:"کوتاه‌مدت",mid:"میان‌مدت",long:"بلندمدت"};
+const fa=s=>String(s).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function jal(gy,gm,gd){const d=[0,31,59,90,120,151,181,212,243,273,304,334],g2=gm>2?gy+1:gy;
+let n=355666+365*gy+Math.floor((g2+3)/4)-Math.floor((g2+99)/100)+Math.floor((g2+399)/400)+gd+d[gm-1];
+let y=-1595+33*Math.floor(n/12053);n%=12053;y+=4*Math.floor(n/1461);n%=1461;
+if(n>365){y+=Math.floor((n-1)/365);n=(n-1)%365}
+return[y,n<186?1+Math.floor(n/31):7+Math.floor((n-186)/30),1+(n<186?n%31:(n-186)%30)]}
+const jt=dt=>{const[y,m,d]=jal(dt.getFullYear(),dt.getMonth()+1,dt.getDate());return`${WD[dt.getDay()]} ${fa(d)} ${MN[m-1]} ${fa(y)}`};
+const iso=dt=>{const p=n=>String(n).padStart(2,"0");return`${dt.getFullYear()}-${p(dt.getMonth()+1)}-${p(dt.getDate())}`};
+let S={plans:[],goals:[]},tab=0;
+try{S=Object.assign(S,JSON.parse(localStorage.getItem("pakhteh")||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem("pakhteh",JSON.stringify(S))}catch(e){}};
+const startOf=p=>new Date(p.date+"T"+p.s);
+const timers={};
+function ring(t,b){try{if(window.Notification&&Notification.permission==="granted")new Notification(t,{body:b})}catch(e){}try{navigator.vibrate&&navigator.vibrate([300,150,300])}catch(e){}beep()}
+function beep(){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=880;g.gain.setValueAtTime(.2,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+1.2);o.start();o.stop(a.currentTime+1.2)}catch(e){}}
+function arm(){Object.values(timers).forEach(clearTimeout);
+S.plans.filter(p=>!p.done).forEach(p=>{const st=startOf(p)-Date.now(),en=new Date(p.date+"T"+p.e)-Date.now();
+const put=(k,ms,f)=>{if(ms>0&&ms<2147483000)timers[p.id+k]=setTimeout(f,ms)};
+if(p.rem)put("r",st-p.rem*60000,()=>ring(p.title,`${fa(p.rem)} دقیقه دیگر شروع می‌شود • ${msg(p).t}`));
+put("s",st,()=>{ring(p.title,"وقتشه! "+msg(p).m);showAlarm(p.id)});
+put("e",en,()=>{ring("جا موندی؟","«"+p.title+"» به یادآوری‌ها رفت. هر وقت آماده بودی انجامش بده.");if(tab==2)draw();else nav()})})}
+const TABS=["خانه","برنامه‌ها","یادآوری‌ها","اهداف","گزارش"];
+function nav(){document.getElementById("nav").innerHTML=TABS.map((t,i)=>`<button class="${i==tab?"on":""}" onclick="tab=${i};draw()">${t}${i==2&&missed().length?` <span class="tag">${fa(missed().length)}</span>`:""}</button>`).join("")}
+function home(){const now=new Date(),td=S.plans.filter(p=>p.date==iso(now)),dn=td.filter(p=>p.done).length,pc=td.length?Math.round(dn/td.length*100):0;
+const nx=S.plans.filter(p=>!p.done&&startOf(p)>now).sort((a,b)=>startOf(a)-startOf(b))[0];
+const late=S.plans.filter(p=>!p.done&&new Date(p.date+"T"+p.e)<now);
+let nxt="برنامهٔ پیش‌رویی ثبت نشده است";if(nx){const m=Math.round((startOf(nx)-now)/60000);nxt=`<b>${esc(nx.title)}</b><div class="gold">${fa(nx.s)} • ${fa(Math.floor(m/60))} ساعت و ${fa(m%60)} دقیقه دیگر</div>`}
+return`<h1>سلام، خوش آمدی</h1><div class="mut"><span id="clk"></span></div>
+<div class="card"><b class="em">پیشرفت امروز: ${fa(pc)}٪</b><div class="bar"><i style="width:${pc}%"></i></div>
+<div class="mut">کل: ${fa(td.length)} | انجام‌شده: ${fa(dn)} | باقی‌مانده: ${fa(td.length-dn)}</div></div>
+<div class="card"><b class="ro">برنامهٔ بعدی</b><div style="margin-top:6px">${nxt}</div></div>
+<div class="card"><b class="gold">جملهٔ امروز</b><div style="margin-top:6px">${msg({id:1,title:""}).m}</div></div>
+<div class="card" onclick="tab=2;draw()"><b class="gold">عقب‌افتاده‌ها</b><div style="margin-top:6px">${late.length?late.map(p=>`<div>• ${esc(p.title)} <span class="mut">(${fa(p.date)})</span></div>`).join(""):"<span class=mut>هیچ کار عقب‌افتاده‌ای نداری 🎉</span>"}</div></div>
+<div class="card"><b class="gold">اهداف مهم</b>${S.goals.slice(0,3).map(g=>`<div style="margin-top:8px">${esc(g.title)} <span class="em">${fa(gp(g))}٪</span><div class="bar"><i style="width:${gp(g)}%"></i></div></div>`).join("")||"<div class=mut style='margin-top:6px'>هنوز هدفی ثبت نشده است</div>"}</div>`}
+function plans(){const L=[...S.plans].sort((a,b)=>startOf(a)-startOf(b));
+return`<h1>برنامه‌های من</h1><button class="fab" onclick="openSheet()" aria-label="برنامهٔ جدید">+</button>
+${L.map(p=>{const[y,m,d]=jal(...p.date.split("-").map(Number));return`<div class="card item ${p.done?"done":""}"><input type="checkbox" ${p.done?"checked":""} onchange="tog(${p.id})"><div class="t"><b>${esc(p.title)}</b> <span class="tag">${PER[p.period]}</span>
+<div class="gold" style="font-size:13px">${fa(d)} ${MN[m-1]} • ${fa(p.s)} تا ${fa(p.e)}</div>${p.note?`<div class="mut">${esc(p.note)}</div>`:""}</div><button class="x" onclick="delPlan(${p.id})">✕</button></div>`}).join("")||'<div class="mut">هنوز برنامه‌ای ثبت نکرده‌ای.</div>'}`}
+const gp=g=>g.steps.length?Math.round(g.steps.filter(s=>s.d).length/g.steps.length*100):0;
+function goals(){return`<h1>اهداف من</h1>
+<div class="card"><input id="gt" placeholder="عنوان هدف"><div class="row"><select id="gm">${Object.entries(TERM).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select><input id="gd" type="date"></div>
+<button class="btn" style="width:100%;margin-top:8px" onclick="addGoal()">افزودن هدف</button></div>
+${S.goals.map(g=>`<div class="card"><div class="item"><div class="t"><b>${esc(g.title)}</b> <span class="tag">${TERM[g.term]}</span>${g.due?`<span class="mut"> تا ${fa(g.due)}</span>`:""}</div><b class="em">${fa(gp(g))}٪</b><button class="x" onclick="delGoal(${g.id})">✕</button></div>
+<div class="bar"><i style="width:${gp(g)}%"></i></div>
+${g.steps.map((s,i)=>`<label class="item ${s.d?"done":""}" style="margin:6px 0"><input type="checkbox" ${s.d?"checked":""} onchange="togStep(${g.id},${i})"><span class="t"><b>${esc(s.t)}</b></span></label>`).join("")}
+<div class="row"><input id="st${g.id}" placeholder="مرحلهٔ جدید"><button class="btn fit" onclick="addStep(${g.id})">+</button></div></div>`).join("")||'<div class="mut">هنوز هدفی ثبت نشده است.</div>'}`}
+function rep(){const now=new Date(),days=[];for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);days.push(d)}
+const per=days.map(d=>{const L=S.plans.filter(p=>p.date==iso(d));return{d,t:L.length,n:L.filter(p=>p.done).length}});
+const T=per.reduce((a,x)=>a+x.t,0),N=per.reduce((a,x)=>a+x.n,0),mx=Math.max(1,...per.map(x=>x.t));
+const best=[...per].sort((a,b)=>b.n-a.n)[0];
+const ms=S.plans.filter(p=>p.date.slice(0,7)==iso(now).slice(0,7)),md=ms.filter(p=>p.done).length;
+const gd=S.goals.filter(g=>g.steps.length&&gp(g)==100).length;
+return`<h1>گزارش پیشرفت من</h1>
+<div class="card"><b class="gold">۷ روز اخیر</b><div class="mut">ثبت‌شده: ${fa(T)} | انجام‌شده: ${fa(N)} | موفقیت: ${fa(T?Math.round(N/T*100):0)}٪</div>
+<div class="bars">${per.map(x=>`<div><b style="height:${x.t/mx*100}px;opacity:.35"></b><b style="height:${x.n/mx*100}px;margin-top:-${x.n/mx*100}px;position:relative"></b>${fa(jal(x.d.getFullYear(),x.d.getMonth()+1,x.d.getDate())[2])}</div>`).join("")}</div>
+<div class="mut" style="margin-top:8px">${best&&best.n?`پرکارترین روز: ${WD[best.d.getDay()]}`:"هنوز کاری انجام نشده"}</div></div>
+<div class="card"><b class="gold">این ماه</b><div class="bar"><i style="width:${ms.length?md/ms.length*100:0}%"></i></div><div class="mut">${fa(md)} از ${fa(ms.length)} برنامه انجام شده</div></div>
+<div class="card"><b class="gold">اهداف</b><div class="mut">تکمیل‌شده: ${fa(gd)} از ${fa(S.goals.length)}</div></div>
+${exportCard()}`}
+function exp(){const a=document.createElement("a");a.href="data:application/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(S));a.download="pakhteh-backup.json";a.click()}
+const V=[home,plans,remind,goals2,rep];
+function draw(){nav();document.getElementById("v").innerHTML=V[tab]();tick()}
+function tick(){const c=document.getElementById("clk");if(c){const n=new Date();c.textContent=jt(n)+" • "+fa(n.toTimeString().slice(0,8))}}
+setInterval(tick,1000);
+const id=()=>Date.now()+Math.floor(Math.random()*1000);
+function addPlan(){const t=F.title.trim();if(!t){document.getElementById("ti").focus();return}const[gy,gm,gd]=j2g(F.jy,F.jm,F.jd),[eh,em]=endT();S.plans.push({id:id(),title:t,note:F.note.trim(),date:`${gy}-${p2(gm)}-${p2(gd)}`,s:`${p2(F.h)}:${p2(F.m)}`,e:`${p2(eh)}:${p2(em)}`,period:F.per,pri:F.pri,rem:F.rem,done:false});closeSheet();
+try{if(window.Notification&&Notification.permission==="default")Notification.requestPermission()}catch(e){}save();arm();draw()}
+function tog(i){const p=S.plans.find(x=>x.id==i);p.done=!p.done;save();arm();draw()}
+function delPlan(i){S.plans=S.plans.filter(x=>x.id!=i);save();arm();draw()}
+function addGoal(){const t=gt.value.trim();if(!t)return;S.goals.push({id:id(),title:t,term:gm.value,due:gd.value,steps:[]});save();draw()}
+function delGoal(i){S.goals=S.goals.filter(x=>x.id!=i);save();draw()}
+function addStep(i){const el=document.getElementById("st"+i),t=el.value.trim();if(!t)return;S.goals.find(g=>g.id==i).steps.push({t,d:false});save();draw()}
+function togStep(i,k){const s=S.goals.find(g=>g.id==i).steps[k];s.d=!s.d;save();draw()}
+function j2g(jy,jm,jd){jy+=1595;let n=-355668+365*jy+Math.floor(jy/33)*8+Math.floor((jy%33+3)/4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186),gy=400*Math.floor(n/146097);n%=146097;
+if(n>36524){gy+=100*Math.floor(--n/36524);n%=36524;if(n>=365)n++}gy+=4*Math.floor(n/1461);n%=1461;if(n>365){gy+=Math.floor((n-1)/365);n=(n-1)%365}
+let gd=n+1;const a=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31];let gm=0;for(;gm<13&&gd>a[gm];gm++)gd-=a[gm];return[gy,gm,gd]}
+const p2=n=>String(n).padStart(2,"0");
+let F=null;
+function setDate(o){const d=new Date();d.setDate(d.getDate()+o);[F.jy,F.jm,F.jd]=jal(d.getFullYear(),d.getMonth()+1,d.getDate());F.off=o}
+function openSheet(){F={title:"",note:"",h:9,m:0,dur:60,per:"daily",pri:1,rem:0};setDate(0);paint();try{if(window.Notification&&Notification.permission==="default")Notification.requestPermission()}catch(e){}}
+function closeSheet(){F=null;paint()}
+function endT(){const t=F.h*60+F.m+F.dur;return[Math.floor(t/60)%24,t%60]}
+function chips(k,list){return list.map(([l,v])=>`<button class="chip ${F[k]===v?"on":""}" onclick="F.${k}=${typeof v==="string"?`'${v}'`:v};paint()">${l}</button>`).join("")}
+function opts(a,sel){return a.map(([l,v])=>`<option value="${v}" ${v==sel?"selected":""}>${l}</option>`).join("")}
+function paint(){let el=document.getElementById("sheet");if(!F){if(el)el.remove();return}
+const isNew=!el;if(!el){el=document.createElement("div");el.id="sheet";document.body.appendChild(el)}
+const oldSh=el.querySelector(".sh"),st=oldSh?oldSh.scrollTop:0;
+const dc=F.jm<=6?31:F.jm<=11?30:29;if(F.jd>dc)F.jd=dc;const n=new Date(),cy=jal(n.getFullYear(),n.getMonth()+1,n.getDate())[0],[eh,em]=endT();
+const rng=(a,b,s=1)=>{const r=[];for(let i=a;i<=b;i+=s)r.push(i);return r};
+const[gy,gm,gd]=j2g(F.jy,F.jm,F.jd),dd=new Date(gy,gm-1,gd);
+el.innerHTML=`<div class="bk" onclick="closeSheet()"></div><div class="sh ${isNew?"new":""}"><div class="grip"></div><div class="item"><h1 class="t" style="font-size:20px">برنامهٔ جدید</h1><button class="x" onclick="closeSheet()">✕</button></div>
+<input id="ti" placeholder="چه برنامه‌ای داری؟" value="${esc(F.title)}" oninput="F.title=this.value">
+<textarea rows="2" placeholder="یادداشت (اختیاری)" oninput="F.note=this.value">${esc(F.note)}</textarea>
+<div class="lb">تاریخ</div><div class="chips">${chips("off",[["امروز",0],["فردا",1],["پس‌فردا",2],["هفتهٔ بعد",7]])}</div>
+<div class="row" style="margin-top:6px"><select onchange="F.jd=+this.value;F.off=null;paint()">${opts(rng(1,dc).map(x=>[fa(x),x]),F.jd)}</select><select onchange="F.jm=+this.value;F.off=null;paint()">${opts(MN.map((x,i)=>[x,i+1]),F.jm)}</select><select onchange="F.jy=+this.value;F.off=null;paint()">${opts(rng(cy,cy+4).map(x=>[fa(x),x]),F.jy)}</select></div>
+<div class="lb">ساعت شروع</div><div class="row" dir="ltr"><select onchange="F.h=+this.value;paint()">${opts(rng(0,23).map(x=>[fa(p2(x)),x]),F.h)}</select><b class="fit">:</b><select onchange="F.m=+this.value;paint()">${opts(rng(0,55,5).map(x=>[fa(p2(x)),x]),F.m)}</select></div>
+<div class="lb">مدت</div><div class="chips">${chips("dur",[["۱۵ دقیقه",15],["۳۰ دقیقه",30],["۱ ساعت",60],["۲ ساعت",120],["۴ ساعت",240]])}</div>
+<div class="lb">بازه</div><div class="chips">${chips("per",Object.entries(PER).map(([k,v])=>[v,k]))}</div>
+<div class="lb">اولویت</div><div class="chips">${chips("pri",[["کم",0],["متوسط",1],["زیاد",2]])}</div>
+<div class="lb">یادآوری</div><div class="chips">${chips("rem",[["سر وقت",0],["۱۰ دقیقه قبل",10],["۳۰ دقیقه قبل",30],["۱ ساعت قبل",60]])}</div>
+<div class="sum">${jt(dd)} • ${fa(p2(F.h))}:${fa(p2(F.m))} تا ${fa(p2(eh))}:${fa(p2(em))}</div>
+<button class="btn" style="width:100%;margin-top:12px;padding:14px" onclick="addPlan()">ذخیره برنامه</button></div>`;el.querySelector(".sh").scrollTop=st}
+const MSG={
+sport:{k:/شنا|ورزش|دویدن|باشگاه|پیاده|نرمش|یوگا|تمرین|دوچرخه/,m:["یه قدم کوچیک امروز، یه بدن قوی‌تر فردا 💪","بدنت منتظرته؛ فقط شروع کن!","همین که شروع کنی نصف راه رو رفتی."],t:["قبل از تمرین ۵ دقیقه گرم کن و حین آن آب بنوش 💧","بعد از ورزش کشش بده تا عضلاتت زودتر ریکاوری کنن.","اگه درد حاد حس کردی، تمرین رو متوقف کن."]},
+study:{k:/درس|مطالعه|کتاب|زبان|امتحان|کلاس|آموزش|یادگیری|خوندن|بخون/,m:["ده دقیقه تمرکز از یک ساعت وقت‌گذرانی بهتره 📚","هر چیزی که امروز یاد می‌گیری، فردا مال خودته.","پیشرفت یعنی همین: سر وقت نشستن پای کار."],t:["گوشی رو دور کن و ۲۵ دقیقه متمرکز بخون، بعد ۵ دقیقه استراحت.","بعد از درس، خلاصه‌ش رو با زبون خودت بنویس تا بهتر بمونه.","برای حفظ بهتر، مطلب رو برای یک نفر توضیح بده."]},
+well:{k:/آب|خواب|مدیتیشن|استراحت|تغذیه|میوه|سبزی|نفس/,m:["مراقبت از خودت یه سرمایه‌گذاریه 🌱","آروم باش و نفس بکش؛ این لحظه مال توئه."],t:["روزی ۸ لیوان آب بنوش.","۷ تا ۸ ساعت خواب منظم، تمرکزت رو بالا می‌بره.","هر ساعت یک بار بلند شو و کمی حرکت کن."]},
+gen:{m:["آدم‌های موفق فقط شروع می‌کنن؛ تو هم می‌تونی ✨","کار امروز رو به فردا ننداز؛ فردات کار خودش رو داره.","هر برنامه‌ای که انجام می‌دی، یک قدم به هدفت نزدیک‌تری."],t:["قبل از شروع، نفس عمیق بکش و فقط روی همین یک کار تمرکز کن.","گوشی رو ساکت کن تا حواست پرت نشه."]}};
+function msg(p){const d=Math.floor(Date.now()/864e5),k=Object.keys(MSG).find(x=>MSG[x].k&&MSG[x].k.test(p.title))||"gen",o=MSG[k];return{k,m:o.m[(p.id+d)%o.m.length],t:o.t[(p.id+d+1)%o.t.length]}}
+const missed=()=>S.plans.filter(p=>!p.done&&new Date(p.date+"T"+p.e)<new Date()).sort((a,b)=>startOf(a)-startOf(b));
+const when=p=>{const[y,m,d]=jal(...p.date.split("-").map(Number));return`${fa(d)} ${MN[m-1]} • ${fa(p.s)} تا ${fa(p.e)}`};
+function remind(){const L=missed();return`<h1>یادآوری‌ها</h1><div class="mut">کارهای جامونده؛ هر وقت آماده بودی انجامشون بده</div>`+(L.length?L.map(p=>`<div class="card"><b>${esc(p.title)}</b><div class="gold" style="font-size:13px">${when(p)}</div><div class="mut" style="margin:8px 0">${msg(p).m}</div><div class="row"><button class="btn" onclick="openRun(${p.id})">▶ شروع کن</button><button class="chip" onclick="moveTomorrow(${p.id})">فردا</button><button class="chip" onclick="markDone(${p.id},1)">✔ انجام شده</button></div></div>`).join(""):`<div class="card" style="text-align:center"><div style="font-size:40px">🎉</div><b class="em">همه‌چیز انجام شده!</b><div class="mut">هیچ کار جامونده‌ای نداری.</div></div>`)}
+function overlay(h,dis){let o=document.getElementById("ov");if(!o){o=document.createElement("div");o.id="ov";document.body.appendChild(o)}o.innerHTML=`<div class="bk" ${dis?'onclick="closeOv()"':""}></div>${h}`}
+function closeOv(){const o=document.getElementById("ov");if(o)o.remove()}
+function showAlarm(id){const p=S.plans.find(x=>x.id==id);if(!p||p.done)return;const m=msg(p);overlay(`<div class="mdl" style="text-align:center"><div style="font-size:44px">⏰</div><h2 class="gold" style="margin:4px 0">وقت برنامه‌ست!</h2><b>${esc(p.title)}</b><div class="mut" style="margin:8px 0">${m.m}</div><div class="sum">💡 ${m.t}</div><div class="row" style="margin-top:12px"><button class="btn" onclick="openRun(${id})">▶ شروع</button><button class="chip" onclick="snooze(${id})">۱۰ دقیقه بعد</button></div></div>`,1)}
+function snooze(id){closeOv();setTimeout(()=>{const p=S.plans.find(x=>x.id==id);if(p&&!p.done){ring(p.title,"یادآوری دوباره");showAlarm(id)}},600000)}
+let RUN=null;
+const fmt=s=>fa(p2(Math.floor(s/60)))+":"+fa(p2(s%60));
+const remain=()=>RUN.on?Math.max(0,Math.round((RUN.endAt-Date.now())/1000)):RUN.left;
+function openRun(id){const p=S.plans.find(x=>x.id==id);if(!p)return;const dur=Math.max(5,Math.round((new Date(p.date+"T"+p.e)-startOf(p))/60000)),m=msg(p);
+RUN={id,total:dur*60,left:dur*60,on:true,endAt:Date.now()+dur*60000};
+overlay(`<div class="mdl"><div class="mut" style="text-align:center">در حال انجام</div><h2 class="gold" style="margin:4px 0;text-align:center">${esc(p.title)}</h2><div id="rt" class="big">${fmt(dur*60)}</div><div class="bar"><i id="rb" style="width:0%"></i></div><div class="mut" style="margin:8px 0">${m.m}</div><div class="sum">💡 ${m.t}</div><div class="row" style="margin-top:12px"><button class="chip" id="rp" onclick="togRun()">⏸ توقف</button><button class="btn" onclick="markDone(${id},1)">✔ تمام شد</button></div><button class="x" style="display:block;margin:10px auto 0;font-size:13px" onclick="RUN=null;closeOv()">انصراف</button></div>`)}
+function togRun(){if(RUN.on){RUN.left=remain();RUN.on=false}else{RUN.endAt=Date.now()+RUN.left*1000;RUN.on=true}document.getElementById("rp").textContent=RUN.on?"⏸ توقف":"▶ ادامه"}
+function markDone(id,cel){const p=S.plans.find(x=>x.id==id);if(!p)return;p.done=true;RUN=null;save();arm();closeOv();draw();
+if(cel)overlay(`<div class="mdl" style="text-align:center"><div style="font-size:50px">🎉</div><h2 class="em" style="margin:4px 0">آفرین!</h2><div>«${esc(p.title)}» انجام شد و از یادآوری‌ها حذف شد.</div><button class="btn" style="margin-top:14px" onclick="closeOv()">ادامه</button></div>`,1)}
+function moveTomorrow(id){const p=S.plans.find(x=>x.id==id);p.date=iso(new Date(startOf(p).getTime()+864e5));save();arm();draw()}
+setInterval(()=>{if(!RUN)return;const t=document.getElementById("rt");if(!t)return;const l=remain();t.textContent=fmt(l);document.getElementById("rb").style.width=(100-l/RUN.total*100)+"%";if(l===0&&!RUN.rang){RUN.rang=true;ring("زمان تمام شد ⏰","اگه کارت تموم شده، تایید کن.")}},1000);
+let GF="all";
+const pring=pc=>`<svg width="64" height="64" viewBox="0 0 36 36" style="flex:none"><circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--bg)" stroke-width="3.5"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--em)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="${pc*.974} 100" transform="rotate(-90 18 18)" style="transition:stroke-dasharray .8s"/><text x="18" y="21" text-anchor="middle" font-size="9" font-weight="700" fill="var(--tx)">${fa(pc)}٪</text></svg>`;
+const dtxt=g=>{const[y,m,d]=jal(...g.due.split("-").map(Number));return`${fa(d)} ${MN[m-1]} ${fa(y)}`};
+function dleft(g){const n=Math.round((new Date(g.due+"T00:00")-new Date(iso(new Date())+"T00:00"))/864e5);return n<0?`<span style="color:var(--ro)">${fa(-n)} روز از مهلت گذشته</span>`:n==0?"امروز مهلت است":`${fa(n)} روز مانده`}
+const gcard=g=>{const pc=gp(g),ok=g.steps.length&&pc==100;return`<div class="card" ${ok?'style="border:1px solid var(--em)"':""}><div class="item">${pring(pc)}<div class="t"><b>${esc(g.title)}</b> ${ok?"🏆":""}<div><span class="tag">${TERM[g.term]}</span> ${g.per?`<span class="tag" style="background:var(--em)">${PER[g.per]}</span>`:""}</div>${g.due?`<div class="gold" style="font-size:13px;margin-top:4px">تا ${dtxt(g)} • ${dleft(g)}</div>`:""}</div><button class="x" onclick="delGoal2(${g.id})">✕</button></div>
+${g.steps.map((s,i)=>`<div class="item ${s.d?"done":""}" style="margin:8px 0"><input type="checkbox" ${s.d?"checked":""} onchange="togStep(${g.id},${i})"><span class="t"><b>${esc(s.t)}</b></span><button class="x" style="font-size:15px" onclick="delStep(${g.id},${i})">✕</button></div>`).join("")}
+<div class="row" style="margin-top:6px"><input id="st${g.id}" placeholder="مرحلهٔ جدید" onkeydown="if(event.key==='Enter')addStep(${g.id})"><button class="btn fit" onclick="addStep(${g.id})">+</button></div>
+<textarea rows="2" placeholder="یادداشت دربارهٔ مسیر رسیدن به هدف..." onchange="noteGoal(${g.id},this.value)">${esc(g.note||"")}</textarea></div>`};
+function goals2(){const A=S.goals,L=A.filter(g=>GF=="all"||g.term==GF),dn=A.filter(g=>g.steps.length&&gp(g)==100).length,av=A.length?Math.round(A.reduce((a,g)=>a+gp(g),0)/A.length):0;
+return`<h1>اهداف من</h1><button class="fab" onclick="openGoal()" aria-label="هدف جدید">+</button>
+<div class="card"><div class="item"><div class="t"><b class="gold">${fa(A.length)} هدف</b><div class="mut">${fa(dn)} تکمیل‌شده • میانگین پیشرفت ${fa(av)}٪</div></div>${pring(av)}</div></div>
+<div class="chips" style="margin:8px 0">${[["all","همه"],...Object.entries(TERM)].map(([k,v])=>`<button class="chip ${GF==k?"on":""}" onclick="GF='${k}';draw()">${v}</button>`).join("")}</div>
+${L.map(gcard).join("")||'<div class="mut">هنوز هدفی در این دسته نیست. با دکمهٔ + شروع کن.</div>'}`}
+function delGoal2(i){if(confirm("این هدف حذف شود؟")){S.goals=S.goals.filter(x=>x.id!=i);save();draw()}}
+function delStep(i,k){S.goals.find(g=>g.id==i).steps.splice(k,1);save();draw()}
+function noteGoal(i,v){S.goals.find(g=>g.id==i).note=v;save()}
+function openGoal(){const n=new Date(),[cy,cm]=jal(n.getFullYear(),n.getMonth()+1,n.getDate()),o=a=>a.map(([l,v])=>`<option value="${v}">${l}</option>`).join(""),r=(a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
+overlay(`<div class="mdl"><div class="item"><h2 class="gold t" style="margin:0">هدف جدید</h2><button class="x" onclick="closeOv()">✕</button></div>
+<input id="gtt" placeholder="هدفت چیه؟"><textarea id="gnn" rows="2" placeholder="یادداشت (اختیاری)"></textarea>
+<div class="lb">نوع و بازه</div><div class="row"><select id="gtm">${o(Object.entries(TERM).map(([k,v])=>[v,k]))}</select><select id="gpr">${o(Object.entries(PER).map(([k,v])=>[v,k]))}</select></div>
+<div class="lb">مهلت (شمسی)</div><div class="row"><select id="gjd"><option value="0">بدون مهلت</option>${o(r(1,31).map(x=>[fa(x),x]))}</select><select id="gjm">${o(MN.map((x,i)=>[x,i+1]))}</select><select id="gjy">${o(r(cy,cy+10).map(x=>[fa(x),x]))}</select></div>
+<div class="lb">مراحل (هر خط یک مرحله)</div><textarea id="gst" rows="3" placeholder="مرحلهٔ اول&#10;مرحلهٔ دوم"></textarea>
+<button class="btn" style="width:100%;margin-top:12px;padding:14px" onclick="saveGoal()">ذخیرهٔ هدف</button></div>`,1);
+document.getElementById("gjm").value=cm}
+function saveGoal(){const t=gtt.value.trim();if(!t){gtt.focus();return}let jd=+gjd.value,jm=+gjm.value,jy=+gjy.value,due="";
+if(jd){if(jm>6&&jd>30)jd=30;if(jm==12&&jd>29)jd=29;const[a,b,c]=j2g(jy,jm,jd);due=`${a}-${p2(b)}-${p2(c)}`}
+S.goals.push({id:id(),title:t,note:gnn.value.trim(),term:gtm.value,per:gpr.value,due,steps:gst.value.split("\n").map(x=>x.trim()).filter(Boolean).map(t=>({t,d:false}))});save();closeOv();draw()}
+let GX={icon:"🎯",term:"short",dur:0,title:""},showGX=false;
+const GICONS=["🎯","📚","💪","💰","✈️","🧠","🎨","💼","🏠","❤️"],GTI={short:"⚡",mid:"🌿",long:"🏔️"},GTC={short:"var(--em)",mid:"var(--gold)",long:"var(--ro)"};
+const gchip=(k,l)=>l.map(([t,v])=>`<button class="chip ${GX[k]===v?"on":""}" onclick="GX.${k}=${typeof v==="string"?`'${v}'`:v};draw()">${t}</button>`).join("");
+function gring(v,c){const C=2*Math.PI*26;return`<svg width="64" height="64" viewBox="0 0 64 64" style="flex:none"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--bg)" stroke-width="7"/><circle cx="32" cy="32" r="26" fill="none" stroke="${c}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C*v/100} ${C}" transform="rotate(-90 32 32)" style="transition:stroke-dasharray .8s"/><text x="32" y="37" text-anchor="middle" font-size="14" font-weight="700" fill="var(--tx)" style="font-family:inherit">${fa(v)}٪</text></svg>`}
+function gDue(g){if(!g.due)return"";const[y,m,d]=jal(...g.due.split("-").map(Number)),n=Math.ceil((new Date(g.due+"T23:59")-Date.now())/864e5);return`📅 ${fa(d)} ${MN[m-1]} • ${n<0?"مهلت گذشته":n==0?"امروز آخرین روز":fa(n)+" روز مانده"}`}
+function goals(){const G=S.goals,dn=G.filter(g=>g.steps.length&&gp(g)==100).length,avg=G.length?Math.round(G.reduce((a,g)=>a+gp(g),0)/G.length):0;
+const form=showGX?`<div class="card"><input id="gt" placeholder="هدفت چیه؟ مثلاً یادگیری انگلیسی" value="${esc(GX.title)}" oninput="GX.title=this.value"><div class="lb">آیکون</div><div class="chips">${GICONS.map(i=>`<button class="chip ${GX.icon==i?"on":""}" style="font-size:20px;padding:6px 12px" onclick="GX.icon='${i}';draw()">${i}</button>`).join("")}</div><div class="lb">نوع هدف</div><div class="chips">${gchip("term",[["⚡ کوتاه‌مدت","short"],["🌿 میان‌مدت","mid"],["🏔️ بلندمدت","long"]])}</div><div class="lb">مهلت</div><div class="chips">${gchip("dur",[["بدون مهلت",0],["۱ ماه",30],["۳ ماه",90],["۶ ماه",180],["۱ سال",365]])}</div><button class="btn" style="width:100%;margin-top:14px;padding:13px" onclick="addGoal()">ثبت هدف</button></div>`:"";
+return`<h1>🎯 اهداف من</h1><div class="mut">قدم‌به‌قدم به رویاهات نزدیک‌تر شو</div>
+<div class="card item"><div class="t"><div class="mut">همهٔ اهداف</div><b style="font-size:22px">${fa(G.length)}</b></div><div class="t"><div class="mut">🏆 تکمیل‌شده</div><b class="em" style="font-size:22px">${fa(dn)}</b></div>${gring(avg,"var(--gold)")}</div>
+<button class="btn" style="width:100%" onclick="showGX=!showGX;draw()">${showGX?"✕ بستن":"＋ هدف جدید"}</button>${form}
+${G.map(g=>{const p=gp(g),c=GTC[g.term]||GTC.short,left=g.steps.filter(s=>!s.d).length;return`<div class="card" style="border-inline-start:5px solid ${c}"><div class="item"><div style="width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:25px;background:var(--bg);flex:none">${g.icon||"🎯"}</div><div class="t"><b>${esc(g.title)}</b><div style="margin-top:4px"><span class="tag" style="background:${c};color:var(--ink)">${GTI[g.term]||""} ${TERM[g.term]||""}</span> <span class="mut">${gDue(g)}</span></div></div>${gring(p,c)}<button class="x" onclick="delGoal(${g.id})">✕</button></div>
+<div class="mut" style="margin:10px 0 4px">${!g.steps.length?"مراحل رسیدن به هدفت رو اضافه کن 👇":p==100?"🏆 همهٔ مراحل تکمیل شد، آفرین!":`${fa(left)} مرحله باقی‌مانده`}</div>
+${g.steps.map((s,i)=>`<label class="item ${s.d?"done":""}" style="margin:6px 0"><input type="checkbox" ${s.d?"checked":""} onchange="togStep(${g.id},${i})"><span class="t"><b>${esc(s.t)}</b></span></label>`).join("")}
+<div class="row" style="margin-top:8px"><input id="st${g.id}" placeholder="مرحلهٔ جدید"><button class="btn fit" onclick="addStep(${g.id})">＋</button></div></div>`}).join("")||`<div class="card" style="text-align:center"><div style="font-size:44px">🌟</div><b>اولین هدفت رو بساز</b><div class="mut">با دکمهٔ «هدف جدید» شروع کن</div></div>`}`}
+function addGoal(){const t=GX.title.trim();if(!t){document.getElementById("gt").focus();return}let due="";if(GX.dur){const d=new Date();d.setDate(d.getDate()+GX.dur);due=iso(d)}S.goals.push({id:id(),title:t,term:GX.term,icon:GX.icon,due,steps:[]});GX={icon:"🎯",term:"short",dur:0,title:""};showGX=false;save();draw()}
+let EX=null;
+const T0=()=>{const n=new Date();return jal(n.getFullYear(),n.getMonth()+1,n.getDate())};
+const rng2=(a,b)=>{const r=[];for(let i=a;i<=b;i++)r.push(i);return r};
+const PRI=["کم","متوسط","زیاد"],tl=a=>`${fa(a[2])} ${MN[a[1]-1]} ${fa(a[0])}`;
+const jiso=a=>{const g=j2g(...a);return`${g[0]}-${p2(g[1])}-${p2(g[2])}`};
+function exRange(n){const d=new Date();d.setDate(d.getDate()-n);EX.f=jal(d.getFullYear(),d.getMonth()+1,d.getDate());EX.t=T0();draw()}
+function exRows(){const a=jiso(EX.f),b=jiso(EX.t);return S.plans.filter(p=>p.date>=a&&p.date<=b).sort((x,y)=>startOf(x)-startOf(y))}
+const stt=p=>p.done?"انجام شد":new Date(p.date+"T"+p.e)<new Date()?"انجام نشد (جا مانده)":"در انتظار";
+const jdt=p=>{const[y,m,d]=jal(...p.date.split("-").map(Number));return`${fa(y)}/${fa(p2(m))}/${fa(p2(d))}`};
+const wdn=p=>WD[new Date(p.date+"T12:00").getDay()];
+function exportCard(){if(!EX){const n=new Date(),a=new Date(n);a.setDate(a.getDate()-30);EX={f:jal(a.getFullYear(),a.getMonth()+1,a.getDate()),t:T0(),fmt:"xlsx"}}
+const T=T0()[0];["f","t"].forEach(k=>{const m=EX[k][1],dc=m<=6?31:m<=11?30:29;if(EX[k][2]>dc)EX[k][2]=dc});
+const ds=k=>{const[y,m,d]=EX[k],dc=m<=6?31:m<=11?30:29;return`<div class="row"><select onchange="EX.${k}[2]=+this.value;draw()">${opts(rng2(1,dc).map(x=>[fa(x),x]),d)}</select><select onchange="EX.${k}[1]=+this.value;draw()">${opts(MN.map((x,i)=>[x,i+1]),m)}</select><select onchange="EX.${k}[0]=+this.value;draw()">${opts(rng2(T-6,T+1).map(x=>[fa(x),x]),y)}</select></div>`};
+const ft=[["📊 اکسل","xlsx"],["📄 متن (TXT)","txt"],["💾 پشتیبان کامل","json"]].map(([l,v])=>`<button class="chip ${EX.fmt==v?"on":""}" onclick="EX.fmt='${v}';draw()">${l}</button>`).join("");
+return`<div class="card"><b class="gold">📥 خروجی و پشتیبان‌گیری</b><div class="mut" style="margin-top:4px">ببین در هر بازهٔ زمانی چه کارهایی کردی</div>
+<div class="lb">از تاریخ</div>${ds("f")}<div class="lb">تا تاریخ</div>${ds("t")}
+<div class="chips" style="margin-top:10px"><button class="chip" onclick="exRange(7)">۷ روز اخیر</button><button class="chip" onclick="exRange(30)">۳۰ روز</button><button class="chip" onclick="exRange(365)">یک سال اخیر</button></div>
+<div class="lb">فرمت فایل</div><div class="chips">${ft}</div>
+<div class="sum">${EX.fmt=="json"?"پشتیبان کامل شامل همهٔ برنامه‌ها و اهداف است":`${fa(exRows().length)} برنامه در بازهٔ ${tl(EX.f)} تا ${tl(EX.t)}`}</div>
+<button class="btn" style="width:100%;margin-top:12px;padding:13px" onclick="doExport()">⬇ دانلود فایل</button><div id="exs" class="mut" style="margin-top:8px;text-align:center"></div></div>`}
+async function doExport(){const s=document.getElementById("exs"),say=t=>{if(s)s.textContent=t};
+let dl=null;try{dl=await claude.use("downloads")}catch(e){}
+if(!dl){say("دانلود در این نمایش در دسترس نیست؛ صفحه را داخل claude.ai باز کن.");return}
+const R=exRows(),f=EX.f,t=EX.t,base=`pakhteh-${f[0]}-${p2(f[1])}-${p2(f[2])}_to_${t[0]}-${p2(t[1])}-${p2(t[2])}`;let name,data;
+if(EX.fmt=="json"){name="pakhteh-backup.json";data=JSON.stringify(S,null,1)}
+else if(EX.fmt=="txt"){name=base+".txt";const L="=".repeat(36);let o=`\uFEFFپخته شدن — گزارش ${tl(f)} تا ${tl(t)}\n${L}\n`;
+if(!R.length)o+="\nدر این بازه برنامه‌ای ثبت نشده است.\n";const days={};R.forEach(p=>(days[p.date]=days[p.date]||[]).push(p));
+Object.keys(days).sort().forEach(k=>{const A=days[k],n=A.filter(p=>p.done).length;o+=`\n${jt(new Date(k+"T12:00"))}  (${fa(n)} از ${fa(A.length)} انجام شد)\n`;A.forEach(p=>o+=`  ${p.done?"✔":"✘"} ${fa(p.s)}–${fa(p.e)}  ${p.title}${p.note?" — "+p.note:""}\n`)});
+const dn=R.filter(p=>p.done).length;o+=`\n${L}\nجمع: ${fa(R.length)} برنامه | انجام‌شده: ${fa(dn)} | موفقیت: ${fa(R.length?Math.round(dn/R.length*100):0)}٪\n`;
+if(S.goals.length)o+="\nاهداف (وضعیت فعلی)\n"+S.goals.map(g=>` • ${g.title}: ${fa(gp(g))}٪`).join("\n")+"\n";data=o}
+else{if(!window.XLSX){say("کتابخانهٔ اکسل بارگذاری نشد؛ فرمت TXT را انتخاب کن.");return}name=base+".xlsx";
+const rows=[["تاریخ","روز","عنوان","یادداشت","شروع","پایان","بازه","اولویت","وضعیت"],...R.map(p=>[jdt(p),wdn(p),p.title,p.note||"",fa(p.s),fa(p.e),PER[p.period]||"",PRI[p.pri==null?1:p.pri],stt(p)])];
+const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(rows);ws["!cols"]=[{wch:12},{wch:10},{wch:28},{wch:30},{wch:8},{wch:8},{wch:10},{wch:10},{wch:20}];XLSX.utils.book_append_sheet(wb,ws,"برنامه‌ها");
+const g2=XLSX.utils.aoa_to_sheet([["هدف","نوع","مهلت","مراحل انجام‌شده","کل مراحل","پیشرفت ٪"],...S.goals.map(g=>[g.title,TERM[g.term]||"",g.due||"",g.steps.filter(x=>x.d).length,g.steps.length,gp(g)])]);XLSX.utils.book_append_sheet(wb,g2,"اهداف");
+wb.Workbook={Views:[{RTL:true}]};data=XLSX.write(wb,{bookType:"xlsx",type:"array"})}
+try{await dl.save({filename:name,data});say("✔ فایل ذخیره شد")}catch(e){say(e&&e.code=="declined"?"ذخیره لغو شد":"دانلود انجام نشد، دوباره تلاش کن")}}
+arm();draw();
+</script>
+</body>
+</html>
